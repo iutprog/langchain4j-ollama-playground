@@ -14,3 +14,12 @@ One class, no Spring: LangChain4j `OllamaChatModel` → local Ollama in Podman.
 Other model: `set OLLAMA_MODEL=qwen2.5` (must match `ollama list`).
 
 JDK 26 builds this with `--release 21`.
+
+## Test for the external context
+
+Test questions to try:
+
+“Can I use the Ops Console on my phone?”
+“Who owns a SEV-2 load-balancer incident that has been open for 3 hours?”
+“Has version 5.0 been rolled back?”
+“How much does Meridian charge per server?”
