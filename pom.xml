@@ -25,6 +25,12 @@
             <version>${langchain4j.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+
         <!-- Silences the "no SLF4J provider" warning; prints log-requests output -->
         <dependency>
             <groupId>org.slf4j</groupId>
