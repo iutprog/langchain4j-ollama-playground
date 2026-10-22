@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>lc4j-simplest</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>lc4j-simplest</name>
+    <description>Plain-Java LangChain4j against local Ollama (Podman) - no Spring</description>
+
+    <properties>
+        <!-- JDK 26 compiles this with release 21 bytecode -->
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <langchain4j.version>1.16.3</langchain4j.version>
+    </properties>
+
+    <dependencies>
+        <!-- Brings in langchain4j-core + the Ollama HTTP client -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-ollama</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+
+        <!-- Silences the "no SLF4J provider" warning; prints log-requests output -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.17</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- mvn compile exec:java -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <mainClass>com.example.lc4j.SimplestLC4JOllama</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
