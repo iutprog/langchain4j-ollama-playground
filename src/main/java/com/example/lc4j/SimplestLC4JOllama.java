@@ -10,6 +10,7 @@ import dev.langchain4j.model.chat.response.ChatResponse;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * The Ollama twin of SimplestLC4J (OpenAI version). Differences:
@@ -19,21 +20,28 @@ import java.util.List;
  */
 public class SimplestLC4JOllama {
     public static void main(String[] args) {
+        Scanner userInput;
+        String cmdLine;
+
         ChatModel cmodel = OllamaChatModel.builder()
                 .baseUrl(System.getenv().getOrDefault("OLLAMA_BASE_URL", "http://[::1]:11434"))
                 .modelName(System.getenv().getOrDefault("OLLAMA_MODEL", "llama3.2"))
                 .timeout(Duration.ofSeconds(600))
                 .build();
-                List<ChatMessage> messages = new ArrayList<>();
-                SystemMessage systemMessage = new SystemMessage("Respond as an extremely funny comedian.");
-                messages.add(systemMessage);
-                UserMessage userMessage = new UserMessage("How should i learn Java ?");
-                messages.add(userMessage);
 
-                ChatResponse answer = cmodel.chat(messages);
+        while(true){
+                System.out.println("Prompt>");
 
+                userInput = new Scanner(System.in);
+                cmdLine = userInput.nextLine();
+
+                if (cmdLine.isBlank())
+                    continue;
+
+                UserMessage userMessage = UserMessage.from(cmdLine);
+                var answer = cmodel.chat(userMessage);
                 System.out.println(answer.aiMessage().text());
-
-        
+        }
+                
     }
 }
