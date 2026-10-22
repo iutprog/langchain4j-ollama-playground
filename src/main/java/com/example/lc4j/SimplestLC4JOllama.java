@@ -1,6 +1,7 @@
 package com.example.lc4j;
 
 import dev.langchain4j.data.message.ChatMessage;
+import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
@@ -24,6 +25,8 @@ public class SimplestLC4JOllama {
                 .timeout(Duration.ofSeconds(600))
                 .build();
                 List<ChatMessage> messages = new ArrayList<>();
+                SystemMessage systemMessage = new SystemMessage("Respond as an extremely funny comedian.");
+                messages.add(systemMessage);
                 UserMessage userMessage = new UserMessage("How should i learn Java ?");
                 messages.add(userMessage);
 
