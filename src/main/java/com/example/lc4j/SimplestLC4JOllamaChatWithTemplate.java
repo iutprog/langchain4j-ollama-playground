@@ -3,6 +3,7 @@ package com.example.lc4j;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.input.Prompt;
@@ -17,6 +18,7 @@ import dev.langchain4j.model.ollama.OllamaChatModel;
  */
 public class SimplestLC4JOllamaChatWithTemplate {
 
+    private static final Scanner USER_INPUT = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -28,36 +30,33 @@ public class SimplestLC4JOllamaChatWithTemplate {
                 .build(); 
 
         String myTemplate = 
-             "Please explain {{topic}} to a {{student_type}} using clear, concise paragraph";
+             "Translate {{mytext}} from English to {{language}} and then back to English. Show the delta between the original English and your translated English.";
         PromptTemplate promptTemplate = PromptTemplate.from(myTemplate);
         
-        Map<String, Object> variables  = new HashMap<>();
-        variables.put("topic", "quantum computing");
-        variables.put("student_type", "musician");
-
-        Prompt  prompt = promptTemplate.apply(variables);
-        
-        String response = cmodel.chat(prompt.text());
-        System.out.println(response);
-        /* 
-        List<String> myFiles = Arrays.asList(folder+"firstlevel");
-        String fileString = filesToStrings(myFiles);
-
         while(true){
-                System.out.println("Prompt>");
+                String text = getUserInput("Text> ");
+                String language = getUserInput("Language> ");
 
-                userInput = new Scanner(System.in);
-                cmdLine = userInput.nextLine();
+                Map<String, Object> variables  = new HashMap<>();
+                variables.put("mytext", text);
+                variables.put("language", language);
 
-                if (cmdLine.isBlank())
-                    continue;
+                Prompt  prompt = promptTemplate.apply(variables);
+                System.out.println("ORIGINAL: "+ text);
+                System.out.println("====================================");
+                System.out.println(prompt.text());
+                System.out.println("====================================");
+
+                String response = cmodel.chat(prompt.text());
+                System.out.println(response);
 
 
-                userMessages.add(UserMessage.from(fileString));
-                userMessages.add(UserMessage.from(cmdLine));
-                var answer = cmodel.chat(userMessages);
-                System.out.println(answer.aiMessage().text());
-        } */
+        } 
                 
+    }
+
+    private static String getUserInput(String input) {
+         System.out.print(input);
+         return USER_INPUT.nextLine();
     }
 }

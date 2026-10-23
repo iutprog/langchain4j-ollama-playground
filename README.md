@@ -11,6 +11,9 @@ One class, no Spring: LangChain4j `OllamaChatModel` → local Ollama in Podman.
    If only IPv4 works: `set OLLAMA_BASE_URL=http://127.0.0.1:11434`
 2. `mvn compile exec:java`
 
+3. ## Compile
+mvn clean compile
+
 Other model: `set OLLAMA_MODEL=qwen2.5` (must match `ollama list`).
 
 JDK 26 builds this with `--release 21`.
