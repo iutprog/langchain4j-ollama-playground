@@ -1,0 +1,144 @@
+[main] INFO dev.langchain4j.http.client.log.LoggingHttpClient - HTTP request:
+- method: POST
+- url: http://[::1]:11434/api/chat
+- headers: [Content-Type: application/json]
+- body: {
+  "model" : "llama3.2",
+  "messages" : [ {
+    "role" : "system",
+    "content" : "You are helpful, and informative flight agent. Only use the methos I have described."
+  }, {
+    "role" : "user",
+    "content" : "I need the status of Flight UA1011"
+  } ],
+  "options" : {
+    "stop" : [ ]
+  },
+  "stream" : false,
+  "tools" : [ {
+    "type" : "function",
+    "function" : {
+      "name" : "getFlightStatus",
+      "description" : "Retrieves the flight status of a given flight",
+      "parameters" : {
+        "type" : "object",
+        "properties" : {
+          "arg0" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "arg0" ]
+      }
+    }
+  }, {
+    "type" : "function",
+    "function" : {
+      "name" : "getAircraftType",
+      "description" : "Returns the type of aircraft",
+      "parameters" : {
+        "type" : "object",
+        "properties" : {
+          "arg0" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "arg0" ]
+      }
+    }
+  }, {
+    "type" : "function",
+    "function" : {
+      "name" : "getFlightCost",
+      "description" : "Returns the cost of a flight",
+      "parameters" : {
+        "type" : "object",
+        "properties" : {
+          "arg0" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "arg0" ]
+      }
+    }
+  } ]
+}
+
+[main] INFO com.example.lc4j.SimplestLC4JOllamaFlightInfo - Get flight status of flight UA1011
+[main] INFO dev.langchain4j.http.client.log.LoggingHttpClient - HTTP request:
+- method: POST
+- url: http://[::1]:11434/api/chat
+- headers: [Content-Type: application/json]
+- body: {
+  "model" : "llama3.2",
+  "messages" : [ {
+    "role" : "system",
+    "content" : "You are helpful, and informative flight agent. Only use the methos I have described."
+  }, {
+    "role" : "user",
+    "content" : "I need the status of Flight UA1011"
+  }, {
+    "role" : "assistant",
+    "tool_calls" : [ {
+      "id" : "call_cmetea55",
+      "function" : {
+        "name" : "getFlightStatus",
+        "arguments" : {
+          "arg0" : "UA1011"
+        }
+      }
+    } ]
+  }, {
+    "role" : "tool",
+    "content" : "UA1011 status: IN THE AIR. 2 hours from destination"
+  } ],
+  "options" : {
+    "stop" : [ ]
+  },
+  "stream" : false,
+  "tools" : [ {
+    "type" : "function",
+    "function" : {
+      "name" : "getFlightStatus",
+      "description" : "Retrieves the flight status of a given flight",
+      "parameters" : {
+        "type" : "object",
+        "properties" : {
+          "arg0" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "arg0" ]
+      }
+    }
+  }, {
+    "type" : "function",
+    "function" : {
+      "name" : "getAircraftType",
+      "description" : "Returns the type of aircraft",
+      "parameters" : {
+        "type" : "object",
+        "properties" : {
+          "arg0" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "arg0" ]
+      }
+    }
+  }, {
+    "type" : "function",
+    "function" : {
+      "name" : "getFlightCost",
+      "description" : "Returns the cost of a flight",
+      "parameters" : {
+        "type" : "object",
+        "properties" : {
+          "arg0" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "arg0" ]
+      }
+    }
+  } ]
+}
