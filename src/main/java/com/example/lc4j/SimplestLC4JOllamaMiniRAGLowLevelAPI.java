@@ -27,7 +27,7 @@ import java.util.Scanner;
  * - baseUrl instead of a vendor endpoint
  * - modelName is a plain string that must match `ollama list`
  */
-public class SimplestLC4JOllamaMiniRAG {
+public class SimplestLC4JOllamaMiniRAGLowLevelAPI {
     private static final Scanner USER_INPUT = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -89,7 +89,8 @@ public class SimplestLC4JOllamaMiniRAG {
 
     private static List<String> getMatches(InMemoryEmbeddingStore<TextSegment> myDB, EmbeddingModel eModel,
             String cmdLine) {
-        // Embed the user's query so it can be compared with the document embeddings in the store.
+        // Embed the user's query so it can be compared with the document embeddings in
+        // the store.
         var queryEmbedding = eModel.embed(cmdLine).content();
 
         // Ask the store for the three most similar segments to the query.
@@ -114,7 +115,8 @@ public class SimplestLC4JOllamaMiniRAG {
         }
 
         Document document = FileSystemDocumentLoader.loadDocument(path);
-        // Keep each non-blank line as its own segment instead of combining lines into token-sized chunks.
+        // Keep each non-blank line as its own segment instead of combining lines into
+        // token-sized chunks.
         List<TextSegment> segments = document.text().lines()
                 .map(String::trim)
                 .filter(line -> !line.isEmpty())
@@ -124,7 +126,8 @@ public class SimplestLC4JOllamaMiniRAG {
             throw new IllegalArgumentException("RAG source file contains no text: " + path);
         }
 
-        // Store each embedding with its source segment so search can return the matching text.
+        // Store each embedding with its source segment so search can return the
+        // matching text.
         List<Embedding> embeddings = eModel.embedAll(segments).content();
         myDB.addAll(embeddings, segments);
     }
