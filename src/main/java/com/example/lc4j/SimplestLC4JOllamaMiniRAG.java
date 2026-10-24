@@ -2,9 +2,7 @@ package com.example.lc4j;
 
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.document.Document;
-import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.loader.FileSystemDocumentLoader;
-import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.ChatMemory;
@@ -115,9 +113,12 @@ public class SimplestLC4JOllamaMiniRAG {
         }
 
         Document document = FileSystemDocumentLoader.loadDocument(path);
-        // Recursively split the document into chunks of up to 500 tokens, overlapping adjacent chunks by 50 tokens.
-        DocumentSplitter splitter = DocumentSplitters.recursive(500, 50);
-        List<TextSegment> segments = splitter.split(document);
+        // Keep each non-blank line as its own segment instead of combining lines into token-sized chunks.
+        List<TextSegment> segments = document.text().lines()
+                .map(String::trim)
+                .filter(line -> !line.isEmpty())
+                .map(TextSegment::from)
+                .toList();
         if (segments.isEmpty()) {
             throw new IllegalArgumentException("RAG source file contains no text: " + path);
         }
