@@ -95,7 +95,8 @@ public class SimplestLC4JOllamaMiniRAG {
         // Ask the store for the three most similar segments to the query.
         var searchRequest = EmbeddingSearchRequest.builder()
                 .queryEmbedding(queryEmbedding)
-                .maxResults(3)
+                .maxResults(10)
+                .minScore(0.7)
                 .build();
 
         // Return the matching segments' text as context for the chat model.
